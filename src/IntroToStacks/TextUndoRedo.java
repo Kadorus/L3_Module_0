@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,6 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class TextUndoRedo implements KeyListener {
+	
+	
+	//ㅔ두ㅑㄴ ㅗ돋 ㅌ
+	
+	
 	/* 
 	 * Create a JFrame with a JPanel and a JLabel.
 	 * 
@@ -29,7 +35,8 @@ public class TextUndoRedo implements KeyListener {
 	JPanel panel1 = new JPanel();
 	JLabel label1 = new JLabel();
 	ArrayList<String> aList1 = new ArrayList<String>();
-	
+	Stack<String> undoStack = new Stack<String>();
+	String aListString = "";
 	
 	TextUndoRedo(){
 	frame1.add(panel1);
@@ -47,14 +54,39 @@ public class TextUndoRedo implements KeyListener {
 		TextUndoRedo TextUndoRedo1 = new TextUndoRedo();
 	}
 	
-	public void keyPressed(KeyEvent e){	
+	public void keyPressed(KeyEvent e){
 		if(e.getKeyCode() == 8) {
+			undoStack.push(aList1.get(aList1.size() - 1));
 			aList1.remove(aList1.size() - 1);
-			label1.setText(aList1.toString());
+			for(int i = 0; i < aList1.size(); i++){
+				aListString += aList1.get(i);
+			}
+			label1.setText(aListString);
+			aListString = "";
+		}
+		else if(e.getKeyCode() == 32){
+			aList1.add(" ");
+			for(int i = 0; i < aList1.size(); i++){
+				aListString += aList1.get(i);
+			}
+			label1.setText(aListString);
+			aListString = "";
+		}
+		else if(e.getKeyCode() == 37){
+			aList1.add(undoStack.pop());
+			for(int i = 0; i < aList1.size(); i++){
+				aListString += aList1.get(i);
+			}
+			label1.setText(aListString);
+			aListString = "";
 		}
 		else {
 			aList1.add(KeyEvent.getKeyText(e.getKeyCode()));;
-			label1.setText(aList1.toString());
+			for(int i = 0; i < aList1.size(); i++){
+				aListString += aList1.get(i);
+			}
+			label1.setText(aListString);
+			aListString = "";
 		}
 	}
 

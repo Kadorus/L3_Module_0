@@ -1,6 +1,15 @@
 package IntroToHashMaps;
 
-public class LogSearch {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+public class LogSearch implements ActionListener{
   /* 
 	 * Crate a HashMap of Integers for the keys and Strings for the values.
 	 * Create a GUI with three buttons. 
@@ -28,4 +37,61 @@ public class LogSearch {
 	 * 				is not in the list. 
 	 *
 	 * */
+	
+	public static void main(String[] args){
+		LogSearch logSearch1 = new LogSearch();
+	}
+	
+	HashMap<Integer, String> dog = new HashMap<Integer, String>();
+	JFrame frame1 = new JFrame();
+	JPanel panel1 = new JPanel();
+	JButton button1 = new JButton("Add Entry");
+	JButton button2 = new JButton("Search by ID");
+	JButton button3 = new JButton("View List");
+	
+	LogSearch(){
+		frame1.setSize(500, 500);
+		frame1.setVisible(true);
+		frame1.add(panel1);
+		panel1.setSize(500, 500);
+		panel1.setVisible(true);
+		panel1.add(button1);
+		panel1.add(button2);
+		panel1.add(button3);
+		button1.setSize(100, 50);
+		button2.setSize(100, 50);
+		button3.setSize(100, 50);
+		button1.setVisible(true);
+		button2.setVisible(true);
+		button3.setVisible(true);
+		
+		button1.addActionListener(this);
+		button2.addActionListener(this);
+		button3.addActionListener(this);
+		frame1.pack();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == button1){
+			String numberID = JOptionPane.showInputDialog("Enter an ID number.");
+			Integer id = Integer.parseInt(numberID);
+			String name = JOptionPane.showInputDialog(null, "Enter a name.");
+			dog.put(id, name);
+		}
+		if(e.getSource() == button2){
+			String numberID = JOptionPane.showInputDialog("Enter an ID number.");
+			Integer id = Integer.parseInt(numberID);
+			if(dog.containsKey(id)){
+				JOptionPane.showMessageDialog(null, dog.get(id));
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Name does not exist.");
+			}
+		}
+		if(e.getSource() == button3){
+			JOptionPane.showMessageDialog(null, dog.toString());
+		}
+	}
 }
